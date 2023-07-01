@@ -218,7 +218,7 @@ require('lazy').setup({
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
@@ -250,8 +250,13 @@ vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
+vim.opt.scrolloff = 4
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
+
+vim.opt.autoindent = true
+vim.opt.smartindent = true
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -265,6 +270,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
 vim.keymap.set("i", "jk", "<Esc>")
 
 -- [[ Highlight on yank ]]
@@ -329,7 +335,9 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 -- vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>pv', ':Telescope file_browser<CR>', { noremap = true })
 
+vim.keymap.set('n', '<C-x>g', ':Git<CR>')
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
