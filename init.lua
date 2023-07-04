@@ -155,6 +155,10 @@ require('lazy').setup({
   },
 
   {
+    "windwp/nvim-autopairs",
+    config = function() require("nvim-autopairs").setup {} end
+  },
+  {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
@@ -193,6 +197,8 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -212,6 +218,7 @@ require('lazy').setup({
 
   { import = 'custom.plugins' },
 }, {})
+
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -261,6 +268,10 @@ vim.opt.smartindent = true
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- vim.opt.tabstop = 4
+-- vim.opt.softtabstop = 4
+-- vim.opt.shiftwidth = 4
+-- vim.opt.expandtab = true
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
