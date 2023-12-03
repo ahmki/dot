@@ -128,17 +128,26 @@ require('lazy').setup({
       end,
     },
   },
-
-  {
-    'projekt0n/github-nvim-theme',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+  { 'rose-pine/neovim',
+    lazy = false,
+    priority = 1000,
     config = function()
-      require('github-theme').setup()
+      require('rose-pine').setup()
 
-      vim.cmd('colorscheme github_dark_high_contrast')
-    end,
+      vim.cmd('colorscheme rose-pine')
+    end
   },
+
+  -- {
+  --   'projekt0n/github-nvim-theme',
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     require('github-theme').setup()
+  --
+  --     vim.cmd('colorscheme github_dark_high_contrast')
+  --   end,
+  -- },
 
   {
     -- Set lualine as statusline
@@ -268,9 +277,9 @@ vim.opt.smartindent = true
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- vim.opt.tabstop = 4
--- vim.opt.softtabstop = 4
--- vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 -- vim.opt.expandtab = true
 -- [[ Basic Keymaps ]]
 
@@ -347,6 +356,12 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>pv', ':Telescope file_browser<CR>', { noremap = true })
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>pb",
+  ":Telescope file_browser<CR> path=%:p:h select_buffer=true<CR>",
+  { noremap = true }
+)
 
 vim.keymap.set('n', '<C-x>g', ':Git<CR>')
 -- [[ Configure Treesitter ]]
@@ -434,6 +449,21 @@ local on_attach = function(_, bufnr)
     if desc then
       desc = 'LSP: ' .. desc
     end
+
+    vim.api.nvim_create_autocmd("CursorHold", {
+      buffer = bufnr,
+      callback = function()
+        local opts = {
+          focusable = false,
+          close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+          border = 'rounded',
+          source = 'always',
+          prefix = ' ',
+          scope = 'cursor',
+        }
+        vim.diagnostic.open_float(nil, opts)
+      end
+    })
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
